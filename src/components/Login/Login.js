@@ -2,6 +2,51 @@ import React, { Component } from 'react';
 import useForm from './useForm';
 import validate from './ValidateInfo';
 
+const NodeCouchDb = require('node-couchdb');
+
+const db = new NodeCouchDb({
+  host: '3.235.188.56',
+  protocol: 'http',
+  port: 5984,
+  auth:{
+    user:'admin',
+    pass:'stars'
+  }
+})
+
+/////////////////////////////////////////////
+//   create new User
+/////////////////////////////////////////////
+function createUser(user, cb) {
+
+  db.insert(user, function(err, user) {
+    if (err) return cb(err)
+    cb(null, user)
+  })
+}
+
+const registerUser = (newUser) => {
+  //console.log(values)
+  //db.insert("_users", {
+   //_id: "org.couchdb.user:Jim",
+   //name : "Jim",
+   //age : "23",
+   //Designation : "Designer",
+   //type: "user",
+   //roles: ['Test'],
+   //password: {"Testy"}
+//}).then(({data, headers, status}) => {
+  //  console.log('Not error')
+      // data is json response
+      // headers is an object with all response headers
+      // status is statusCode number
+  //}, err => {
+    //console.log('error')
+      // either request error occured
+      // ...or err.code=EDOCCONFLICT if document with the same id already exists
+  //});
+}
+
 const Login = ({submitForm}) => {
   const { handleChange, values, handleSubmit, errors } = useForm(submitForm,validate);
     return(
@@ -36,7 +81,7 @@ const Login = ({submitForm}) => {
             <input id="password2" type="password" name="password2" className="form-input" placeholder="Confirm password" value={values.password2} onChange={handleChange}/>
             {errors.password2 && <p>{errors.password2}</p>}
           </div>
-          <button className="form-input-btn" type="submit">
+          <button className="form-input-btn" type="submit" onClick={registerUser}>
             Sign Up
           </button>
           <span className='form-input-login'>

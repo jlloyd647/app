@@ -17,9 +17,9 @@ const db = new NodeCouchDb({
   }
 })
 
-db.listDatabases().then(function(dbs){
-  console.log(dbs);
-});
+//db.listDatabases().then(function(dbs){
+//  console.log(dbs);
+//});
 
 function App() {
   return (
